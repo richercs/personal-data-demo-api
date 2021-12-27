@@ -9,10 +9,13 @@ use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="App_User")
+ * @UniqueEntity("email")
  */
 class User implements TimestampableInterface
 {
@@ -27,16 +30,20 @@ class User implements TimestampableInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private string $name;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private string $email;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\NotBlank()
      */
     private DateTimeInterface $dateOfBirth;
 
