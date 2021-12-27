@@ -7,6 +7,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,7 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="App_User")
  * @UniqueEntity("email")
  */
-class User implements TimestampableInterface
+class User implements TimestampableInterface, JsonSerializable
 {
     use TimestampableTrait;
 
@@ -86,5 +87,15 @@ class User implements TimestampableInterface
         $this->dateOfBirth = $dateOfBirth;
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'dateOfBirth' => $this->dateOfBirth->format("Y-m-d")
+        ];
     }
 }

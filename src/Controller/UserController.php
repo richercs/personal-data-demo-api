@@ -6,11 +6,13 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
@@ -18,13 +20,31 @@ class UserController extends AbstractController
     use FormErrorSerializerTrait;
 
     private EntityManagerInterface $entityManager;
+    private UserRepository $userRepository;
 
     /**
      * @param EntityManagerInterface $entityManager
+     * @param UserRepository $userRepository
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UserRepository $userRepository
+    )
     {
         $this->entityManager = $entityManager;
+        $this->userRepository = $userRepository;
+    }
+
+    /**
+     * @Route("/user/{id}", name="get_user", methods={"GET"}, requirements={"id"="\d+"})
+     * @return object|void
+     */
+    public function getUserData($id)
+    {
+        return new JsonResponse(
+            $this->findUserById($id),
+            Response::HTTP_OK
+        );
     }
 
     /**
@@ -63,5 +83,16 @@ class UserController extends AbstractController
             ],
             Response::HTTP_CREATED
         );
+    }
+
+    private function findUserById($id): User
+    {
+        $user = $this->userRepository->find($id);
+
+        if (null === $user) {
+            throw new NotFoundHttpException('User entity not found!');
+        }
+
+        return $user;
     }
 }
