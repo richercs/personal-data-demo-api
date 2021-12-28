@@ -9,7 +9,6 @@ services:
     volumes:
       - ./.docker/php-fpm/php:/usr/local/etc/php:ro,cached
       - .:/app:rw,cached
-      - ./var:/app/var:rw,delegated
       - ./.composer:/var/www/.composer
     expose:
       - 9000
