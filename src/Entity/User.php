@@ -139,7 +139,8 @@ class User implements TimestampableInterface, JsonSerializable
             'name' => $this->name,
             'email' => $this->email,
             'dateOfBirth' => $this->dateOfBirth->format("Y-m-d"),
-            'phoneNumbers' => $this->phoneNumbers->toArray()
+            'phoneNumbers' => $this->phoneNumbers->toArray(),
+            'createdAt' => $this->createdAt
         ];
     }
 }
