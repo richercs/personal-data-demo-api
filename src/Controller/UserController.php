@@ -61,7 +61,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user", name="post_user", methods={"POST"})
+     * @Route("/user", name="post_user_data", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      */
