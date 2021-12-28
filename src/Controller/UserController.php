@@ -115,6 +115,46 @@ class UserController extends AbstractController
 
         $form = $this->createForm(UserType::class, $user);
 
+        $form->submit($data);
+
+        if (false === $form->isValid()) {
+
+            return new JsonResponse(
+                [
+                    'status' => 'error',
+                    'errors' => $this->getErrorsFromForm($form)
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
+
+        $this->entityManager->flush();
+
+        return new JsonResponse(
+            [
+                'status' => 'ok',
+            ],
+            Response::HTTP_NO_CONTENT
+        );
+    }
+
+    /**
+     * @Route("/user/{id}", name="patch_user_data", methods={"PATCH"}, requirements={"id"="\d+"})
+     * @param Request $request
+     * @param string $id
+     * @return JsonResponse
+     */
+    public function patch(Request $request, string $id): JsonResponse
+    {
+        $data = json_decode(
+            $request->getContent(),
+            true
+        );
+
+        $user = $this->findUserById($id);
+
+        $form = $this->createForm(UserType::class, $user);
+
         $form->submit($data, false);
 
         if (false === $form->isValid()) {
