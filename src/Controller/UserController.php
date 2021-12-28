@@ -53,9 +53,7 @@ class UserController extends AbstractController
      * @param Request $request
      * @return JsonResponse
      */
-    public function post(
-        Request $request
-    ): JsonResponse
+    public function post(Request $request): JsonResponse
     {
         $data = json_decode(
             $request->getContent(),
