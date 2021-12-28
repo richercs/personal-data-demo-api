@@ -36,10 +36,11 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/{id}", name="get_user", methods={"GET"}, requirements={"id"="\d+"})
-     * @return object|void
+     * @Route("/user/{id}", name="get_user_data", methods={"GET"}, requirements={"id"="\d+"})
+     * @param string $id
+     * @return JsonResponse
      */
-    public function getUserData($id)
+    public function getUserData(string $id): JsonResponse
     {
         return new JsonResponse(
             $this->findUserById($id),
@@ -49,6 +50,8 @@ class UserController extends AbstractController
 
     /**
      * @Route("/user", name="post_user", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
      */
     public function post(
         Request $request
