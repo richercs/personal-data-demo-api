@@ -33,20 +33,20 @@ class User implements TimestampableInterface, JsonSerializable
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private string $name;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\NotBlank
+     * @Assert\Email
      */
     private string $email;
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private DateTimeInterface $dateOfBirth;
 
