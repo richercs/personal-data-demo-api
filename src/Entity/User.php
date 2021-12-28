@@ -54,6 +54,10 @@ class User implements TimestampableInterface, JsonSerializable
      * @var PhoneNumber[]|Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\PhoneNumber", mappedBy="user", cascade={"persist"}, orphanRemoval=true)
+     * @Assert\NotBlank
+     * @Assert\Type("iterable")
+     * @Assert\Count(min=1)
+     * @Assert\Valid
      */
     private $phoneNumbers;
 

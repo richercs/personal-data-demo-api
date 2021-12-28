@@ -7,6 +7,7 @@ namespace App\Entity;
 use App\Repository\PhoneNumberRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PhoneNumberRepository::class)
@@ -29,6 +30,12 @@ class PhoneNumber implements JsonSerializable
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Type("string")
+     * @Assert\NotNull
+     * @Assert\Regex(
+     *     pattern="/^\+36(1|20|30|70)[0-9]{7}$/",
+     *     message="Please provide a valid phone number."
+     * )
      */
     private string $phoneNumber;
 
