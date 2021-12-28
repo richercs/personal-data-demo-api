@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  php:
+    container_name: 'demo-api-php_fpm'
+    network_mode: bridge
+    build:
+      context: ./.docker/php-fpm
+    volumes:
+      - ./.docker/php-fpm/php:/usr/local/etc/php:ro,cached
+      - .:/app:rw,cached
+      - ./.composer:/var/www/.composer
+    expose:
+      - 9000
+    user: '1000'
+
+  nginx:
+    container_name: 'demo-api.docker'
+    network_mode: bridge
+    build: .docker/nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./public:/app/public:ro
+      - ./.docker/nginx/etc/nginx:/etc/nginx:ro,cached
+    links:
+      - php
