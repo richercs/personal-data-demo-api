@@ -80,3 +80,10 @@ make unit-test
 ```bash
 make down
 ```
+
+## Todos:
+```
+-- Currently the docker containers only work on linux if user has id: 1000
+-- Use REST API bundles like: FOSRestBundle or API Platform for better error handling and less code duplication
+-- Unit test coverage (currently only have one test)
+```
