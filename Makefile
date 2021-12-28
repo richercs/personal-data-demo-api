@@ -3,6 +3,7 @@ dev:
 		docker-compose build --pull && \
 		docker-compose -f docker-compose.yml up -d --remove-orphans && \
 		docker-compose exec php composer install && \
+		echo "waiting 8 sec for db to be up and running" && \
 		sleep 8 && \
 		docker-compose exec php /app/bin/console doctrine:query:sql "select 1;" && \
 		docker-compose exec php /app/bin/console doctrine:migrations:migrate --no-interaction
