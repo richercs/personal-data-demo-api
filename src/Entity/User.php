@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
@@ -48,6 +50,18 @@ class User implements TimestampableInterface, JsonSerializable
      */
     private DateTimeInterface $dateOfBirth;
 
+    /**
+     * @var PhoneNumber[]|Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\PhoneNumber", mappedBy="user", cascade={"persist"}, orphanRemoval=true)
+     */
+    private $phoneNumbers;
+
+    public function __construct()
+    {
+        $this->phoneNumbers = new ArrayCollection();
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -89,13 +103,39 @@ class User implements TimestampableInterface, JsonSerializable
         return $this;
     }
 
+    /**
+     * @return PhoneNumber[]|Collection
+     */
+    public function getPhoneNumbers()
+    {
+        return $this->phoneNumbers;
+    }
+
+    public function addPhoneNumber(PhoneNumber $phoneNumber): self
+    {
+        if (!$this->phoneNumbers->contains($phoneNumber)) {
+            $phoneNumber->setUser($this);
+            $this->phoneNumbers->add($phoneNumber);
+        }
+
+        return $this;
+    }
+
+    public function removePhoneNumber(PhoneNumber $phoneNumber): self
+    {
+        $this->phoneNumbers->removeElement($phoneNumber);
+
+        return $this;
+    }
+
     public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'dateOfBirth' => $this->dateOfBirth->format("Y-m-d")
+            'dateOfBirth' => $this->dateOfBirth->format("Y-m-d"),
+            'phoneNumbers' => $this->phoneNumbers->toArray()
         ];
     }
 }
