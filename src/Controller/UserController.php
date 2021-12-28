@@ -49,6 +49,18 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/user", name="get_all_user_data", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function getAllUserData(): JsonResponse
+    {
+        return new JsonResponse(
+            $this->userRepository->findAll(),
+            Response::HTTP_OK
+        );
+    }
+
+    /**
      * @Route("/user", name="post_user", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
