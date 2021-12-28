@@ -138,6 +138,24 @@ class UserController extends AbstractController
         );
     }
 
+    /**
+     * @Route("/user/{id}", name="delete_user_data", methods={"DELETE"}, requirements={"id"="\d+"})
+     * @param string $id
+     * @return JsonResponse
+     */
+    public function delete(string $id): JsonResponse
+    {
+        $user = $this->findUserById($id);
+
+        $this->entityManager->remove($user);
+        $this->entityManager->flush();
+
+        return new JsonResponse(
+            null,
+            Response::HTTP_NO_CONTENT
+        );
+    }
+
     private function findUserById($id): User
     {
         $user = $this->userRepository->find($id);
