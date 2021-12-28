@@ -23,6 +23,52 @@ put data to update existing user:   PUT     /user/{id}
 patch partial data to update user:  PATCH   /user/{id}                         
 delete user data:                   DELETE  /user/{id}
 ```
+
+Example requests:
+```
+POST    /user
+{
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "dateOfBirth": "1992-01-01",
+    "phoneNumbers": [
+        {
+            "phoneNumber": "+36700001231"
+        },
+        {
+            "phoneNumber": "+36700001232"
+        }
+    ]
+}
+```
+```
+PUT    /user/{id}
+{
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "dateOfBirth": "1992-01-01",
+    "phoneNumbers": [
+        {
+            "phoneNumber": "+36305555551"
+        },
+        {
+            "phoneNumber": "+36700001232"
+        }
+    ]
+}
+```
+```
+PATCH   /user/{id}
+{
+    "name": "Jane Doe",
+    "email": "jane.doe@example.com"
+    "phoneNumbers": [
+        {
+            "phoneNumber": "+36305555551"
+        }
+    ]
+}
+```
 ## Run unit tests
 
 ```bash
