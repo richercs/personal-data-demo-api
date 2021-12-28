@@ -1,7 +1,7 @@
 # Project setup
 
 ```bash
-git clone git@github.com:richercs/personal-data-demo-api.git .
+git clone git@github.com:richercs/personal-data-demo-api.git
 cd personal-data-demo-api
 ```
 
