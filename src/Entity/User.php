@@ -17,7 +17,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Table(name="App_User")
+ * @ORM\Table(name="App_User", indexes={@ORM\Index(name="search_idx", columns={"name"})})
  * @UniqueEntity("email")
  */
 class User implements TimestampableInterface, JsonSerializable
