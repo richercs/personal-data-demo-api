@@ -37,10 +37,10 @@ class UserController extends AbstractController
 
     /**
      * @Route("/user/{id}", name="get_user_data", methods={"GET"}, requirements={"id"="\d+"})
-     * @param string $id
+     * @param int $id
      * @return JsonResponse
      */
-    public function getUserData(string $id): JsonResponse
+    public function getUserData(int $id): JsonResponse
     {
         return new JsonResponse(
             $this->findUserById($id),
@@ -101,10 +101,10 @@ class UserController extends AbstractController
     /**
      * @Route("/user/{id}", name="put_user_data", methods={"PUT"}, requirements={"id"="\d+"})
      * @param Request $request
-     * @param string $id
+     * @param int $id
      * @return JsonResponse
      */
-    public function put(Request $request, string $id): JsonResponse
+    public function put(Request $request, int $id): JsonResponse
     {
         $data = json_decode(
             $request->getContent(),
@@ -141,10 +141,10 @@ class UserController extends AbstractController
     /**
      * @Route("/user/{id}", name="patch_user_data", methods={"PATCH"}, requirements={"id"="\d+"})
      * @param Request $request
-     * @param string $id
+     * @param int $id
      * @return JsonResponse
      */
-    public function patch(Request $request, string $id): JsonResponse
+    public function patch(Request $request, int $id): JsonResponse
     {
         $data = json_decode(
             $request->getContent(),
@@ -180,10 +180,10 @@ class UserController extends AbstractController
 
     /**
      * @Route("/user/{id}", name="delete_user_data", methods={"DELETE"}, requirements={"id"="\d+"})
-     * @param string $id
+     * @param int $id
      * @return JsonResponse
      */
-    public function delete(string $id): JsonResponse
+    public function delete(int $id): JsonResponse
     {
         $user = $this->findUserById($id);
 
